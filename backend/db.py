@@ -7,21 +7,24 @@ from pathlib import Path
 from uuid import uuid4
 
 ROOT = Path(__file__).resolve().parent
-DB_PATH = Path(os.getenv('DATABASE_PATH', str(ROOT / 'xogame.db')))
-MEDIA_PATH = Path(os.getenv('MEDIA_PATH', str(ROOT / 'media')))
+DB_PATH = Path(os.getenv("DATABASE_PATH", str(ROOT / "xogame.db")))
+MEDIA_PATH = Path(os.getenv("MEDIA_PATH", str(ROOT / "media")))
+
 
 def now():
     return datetime.now(timezone.utc).isoformat()
 
+
 def uid():
     return str(uuid4())
+
 
 @contextmanager
 def connect():
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
     connection = sqlite3.connect(DB_PATH, timeout=20)
     connection.row_factory = sqlite3.Row
-    connection.execute('PRAGMA foreign_keys=ON')
+    connection.execute("PRAGMA foreign_keys=ON")
     try:
         yield connection
         connection.commit()
@@ -31,14 +34,19 @@ def connect():
     finally:
         connection.close()
 
+
 def audit(c, action, target, metadata=None):
-    c.execute('INSERT INTO audit VALUES(?,?,?,?,?,?)', (uid(), 'open-workspace', action, target, now(), json.dumps(metadata or {})))
+    c.execute(
+        "INSERT INTO audit VALUES(?,?,?,?,?,?)",
+        (uid(), "open-workspace", action, target, now(), json.dumps(metadata or {})),
+    )
+
 
 def migrate():
     MEDIA_PATH.mkdir(parents=True, exist_ok=True)
     with connect() as c:
-        c.execute('PRAGMA journal_mode=WAL')
-        c.executescript('''
+        c.execute("PRAGMA journal_mode=WAL")
+        c.executescript("""
         CREATE TABLE IF NOT EXISTS migrations(version INTEGER PRIMARY KEY, applied_at TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS profiles(id TEXT PRIMARY KEY, data TEXT NOT NULL, suspended INTEGER NOT NULL DEFAULT 0);
         CREATE TABLE IF NOT EXISTS organisations(id TEXT PRIMARY KEY, data TEXT NOT NULL, status TEXT NOT NULL, reason TEXT NOT NULL DEFAULT '');
@@ -55,4 +63,4 @@ def migrate():
         CREATE INDEX IF NOT EXISTS videos_candidate ON videos(candidate_id,status);
         CREATE INDEX IF NOT EXISTS events_application ON events(application_id,created_at);
         INSERT OR IGNORE INTO migrations VALUES(1,datetime('now'));
-        ''')
+        """)

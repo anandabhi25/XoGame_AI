@@ -1,27 +1,343 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Navigate, NavLink, Route, Routes, useLocation, Link } from 'react-router-dom';
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
-import { Search, LayoutDashboard, UserRound, Video, FileText, Building2, ShieldCheck, ArrowUpRight, Menu, X, Bell, ChevronRight, CircleHelp } from 'lucide-react';
-import { api } from './api';
-import { Brand } from './ui';
-import { Jobs, JobDetail } from './pages-jobs';
-import { CandidateDashboard, ProfileEditor, VideoPage, Applications } from './pages-candidate';
-import { Employer, Admin } from './pages-employer';
-import type { Notification } from './types';
-import './styles.css';
+import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom/client";
+import {
+  BrowserRouter,
+  Navigate,
+  NavLink,
+  Route,
+  Routes,
+  useLocation,
+  Link,
+} from "react-router-dom";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
+import {
+  Search,
+  LayoutDashboard,
+  UserRound,
+  Video,
+  FileText,
+  Building2,
+  ShieldCheck,
+  ArrowUpRight,
+  Menu,
+  X,
+  Bell,
+  ChevronRight,
+  CircleHelp,
+} from "lucide-react";
+import { api } from "./api";
+import { Brand } from "./ui";
+import { Jobs, JobDetail } from "./pages-jobs";
+import {
+  CandidateDashboard,
+  ProfileEditor,
+  VideoPage,
+  Applications,
+} from "./pages-candidate";
+import { Employer, Admin } from "./pages-employer";
+import type { Notification } from "./types";
+import "./styles.css";
 
-const queryClient=new QueryClient({defaultOptions:{queries:{staleTime:15000,retry:1,refetchOnWindowFocus:true}}});
-const navigation=[{label:'Discover',links:[{to:'/jobs',name:'Find opportunities',icon:Search}]},{label:'Your workspace',links:[{to:'/candidate/dashboard',name:'Overview',icon:LayoutDashboard},{to:'/candidate/profile',name:'Professional profile',icon:UserRound},{to:'/candidate/video',name:'Video résumé',icon:Video},{to:'/candidate/applications',name:'My applications',icon:FileText}]},{label:'For teams',links:[{to:'/employer/dashboard',name:'Employer workspace',icon:Building2},{to:'/admin/dashboard',name:'Platform review',icon:ShieldCheck}]}];
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { staleTime: 15000, retry: 1, refetchOnWindowFocus: true },
+  },
+});
+const navigation = [
+  {
+    label: "Discover",
+    links: [{ to: "/jobs", name: "Find opportunities", icon: Search }],
+  },
+  {
+    label: "Your workspace",
+    links: [
+      { to: "/candidate/dashboard", name: "Overview", icon: LayoutDashboard },
+      {
+        to: "/candidate/profile",
+        name: "Professional profile",
+        icon: UserRound,
+      },
+      { to: "/candidate/video", name: "Video résumé", icon: Video },
+      {
+        to: "/candidate/applications",
+        name: "My applications",
+        icon: FileText,
+      },
+    ],
+  },
+  {
+    label: "For teams",
+    links: [
+      {
+        to: "/employer/dashboard",
+        name: "Employer workspace",
+        icon: Building2,
+      },
+      { to: "/admin/dashboard", name: "Platform review", icon: ShieldCheck },
+    ],
+  },
+];
 function App() {
-  const [menu,setMenu]=useState(false); const location=useLocation();
-  const notifications=useQuery({queryKey:['notifications'],queryFn:()=>api<Notification[]>('/candidate/notifications'),refetchInterval:15000});
-  return <div className="app-shell"><a href="#main" className="skip-link">Skip to content</a><aside className={`sidebar ${menu?'open':''}`}><div className="sidebar-brand"><Brand/><button className="icon-button mobile-only" aria-label="Close menu" onClick={()=>setMenu(false)}><X size={18}/></button></div><div className="workspace-chip"><span className="workspace-icon">xo</span><div>Open workspace<small>Make your next move.</small></div><span className="workspace-dot"/></div><nav aria-label="Workspace navigation">{navigation.map(section=><div className="nav-section" key={section.label}><p>{section.label}</p>{section.links.map(({to,name,icon:Icon})=><NavLink to={to} key={to} onClick={()=>setMenu(false)} className={({isActive})=>isActive?'nav-item active':'nav-item'}><Icon size={16} strokeWidth={1.7}/><span>{name}</span>{to==='/jobs' && <span className="nav-new">NEW</span>}</NavLink>)}</div>)}</nav><div className="sidebar-bottom"><div className="intro-card"><span className="mono">A BETTER INTRODUCTION</span><h3>More than a résumé.</h3><p>Let them meet the person behind the experience.</p><Link to="/candidate/video" onClick={()=>setMenu(false)}>Create your video <ArrowUpRight size={14}/></Link></div><a className="sidebar-about" href="/landing/"><CircleHelp size={15}/> About XOGAME <ArrowUpRight size={13}/></a><div className="workspace-user"><div className="user-avatar">xo</div><div>Shared demo workspace<small>Open access · No account needed</small></div></div></div></aside>{menu && <button className="menu-backdrop" aria-label="Close navigation" onClick={()=>setMenu(false)}/>}
-  <div className="main-shell"><header className="app-header"><div className="breadcrumb"><button className="icon-button mobile-only" aria-label="Open menu" onClick={()=>setMenu(true)}><Menu size={20}/></button><span>Workspace</span><ChevronRight size={12}/><strong>{location.pathname.startsWith('/jobs')?'Discover opportunities':location.pathname.includes('employer')?'Employer workspace':location.pathname.includes('admin')?'Platform review':'Your next chapter'}</strong></div><div className="header-actions"><span className="open-label"><i/> OPEN ACCESS</span><Link to="/candidate/dashboard" className="notification-button" aria-label={`${notifications.data?.data.filter(n=>!n.read).length||0} unread notifications`}><Bell size={17}/>{notifications.data?.data.some(n=>!n.read) && <i/>}</Link><Link className="top-avatar" to="/candidate/profile" aria-label="Edit your profile">AM</Link></div></header><div className="demo-banner"><span className="mono">DEMO ENVIRONMENT</span><span>Explore freely. All identities and opportunities are fictional. This shared workspace is public.</span><a href="/support">Details <ArrowUpRight size={11}/></a></div><main id="main" className="main-content"><Routes><Route path="/" element={<Navigate to="/jobs" replace/>}/><Route path="/jobs" element={<Jobs/>}/><Route path="/jobs/:id" element={<JobDetail/>}/><Route path="/candidate/dashboard" element={<CandidateDashboard/>}/><Route path="/candidate/profile" element={<ProfileEditor/>}/><Route path="/candidate/video" element={<VideoPage/>}/><Route path="/candidate/applications" element={<Applications/>}/><Route path="/employer/*" element={<Employer/>}/><Route path="/admin/*" element={<Admin/>}/>{['privacy','terms','support'].map(path=><Route key={path} path={`/${path}`} element={<InfoPage type={path}/>}/>)}<Route path="*" element={<InfoPage type="404"/>}/></Routes></main><footer className="app-footer"><span>© {new Date().getFullYear()} XOGAME.AI</span><span>A little more human.</span><div><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link><Link to="/support">Support</Link></div></footer></div></div>;
+  const [menu, setMenu] = useState(false);
+  const location = useLocation();
+  const [mobile, setMobile] = useState(
+    () => matchMedia("(max-width: 767px)").matches,
+  );
+  useEffect(() => {
+    const media = matchMedia("(max-width: 767px)");
+    const update = () => setMobile(media.matches);
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+  useEffect(() => {
+    if (!menu) return;
+    const previous = document.activeElement as HTMLElement | null;
+    document
+      .querySelector<HTMLButtonElement>('.sidebar [aria-label="Close menu"]')
+      ?.focus();
+    const escape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenu(false);
+    };
+    document.addEventListener("keydown", escape);
+    return () => {
+      document.removeEventListener("keydown", escape);
+      previous?.focus();
+    };
+  }, [menu]);
+  const notifications = useQuery({
+    queryKey: ["notifications"],
+    queryFn: () => api<Notification[]>("/candidate/notifications"),
+    refetchInterval: 15000,
+  });
+  return (
+    <div className="app-shell">
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
+      <aside
+        className={`sidebar ${menu ? "open" : ""}`}
+        inert={mobile && !menu}
+        aria-hidden={mobile && !menu}
+      >
+        <div className="sidebar-brand">
+          <Brand />
+          <button
+            className="icon-button mobile-only"
+            aria-label="Close menu"
+            onClick={() => setMenu(false)}
+          >
+            <X size={18} />
+          </button>
+        </div>
+        <div className="workspace-chip">
+          <span className="workspace-icon">xo</span>
+          <div>
+            Open workspace<small>Make your next move.</small>
+          </div>
+          <span className="workspace-dot" />
+        </div>
+        <nav aria-label="Workspace navigation">
+          {navigation.map((section) => (
+            <div className="nav-section" key={section.label}>
+              <p>{section.label}</p>
+              {section.links.map(({ to, name, icon: Icon }) => (
+                <NavLink
+                  to={to}
+                  key={to}
+                  onClick={() => setMenu(false)}
+                  className={({ isActive }) =>
+                    isActive ? "nav-item active" : "nav-item"
+                  }
+                >
+                  <Icon size={16} strokeWidth={1.7} />
+                  <span>{name}</span>
+                  {to === "/jobs" && <span className="nav-new">NEW</span>}
+                </NavLink>
+              ))}
+            </div>
+          ))}
+        </nav>
+        <div className="sidebar-bottom">
+          <div className="intro-card">
+            <span className="mono">A BETTER INTRODUCTION</span>
+            <h3>More than a résumé.</h3>
+            <p>Let them meet the person behind the experience.</p>
+            <Link to="/candidate/video" onClick={() => setMenu(false)}>
+              Create your video <ArrowUpRight size={14} />
+            </Link>
+          </div>
+          <a className="sidebar-about" href="/landing/">
+            <CircleHelp size={15} /> About XOGAME <ArrowUpRight size={13} />
+          </a>
+          <div className="workspace-user">
+            <div className="user-avatar">xo</div>
+            <div>
+              Shared demo workspace
+              <small>Open access · No account needed</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+      {menu && (
+        <button
+          className="menu-backdrop"
+          aria-label="Close navigation"
+          onClick={() => setMenu(false)}
+        />
+      )}
+      <div className="main-shell" inert={mobile && menu}>
+        <header className="app-header">
+          <div className="breadcrumb">
+            <button
+              className="icon-button mobile-only"
+              aria-label="Open menu"
+              onClick={() => setMenu(true)}
+            >
+              <Menu size={20} />
+            </button>
+            <span>Workspace</span>
+            <ChevronRight size={12} />
+            <strong>
+              {location.pathname.startsWith("/jobs")
+                ? "Discover opportunities"
+                : location.pathname.includes("employer")
+                  ? "Employer workspace"
+                  : location.pathname.includes("admin")
+                    ? "Platform review"
+                    : "Your next chapter"}
+            </strong>
+          </div>
+          <div className="header-actions">
+            <span className="open-label">
+              <i /> OPEN ACCESS
+            </span>
+            <Link
+              to="/candidate/dashboard"
+              className="notification-button"
+              aria-label={`${notifications.data?.data.filter((n) => !n.read).length || 0} unread notifications`}
+            >
+              <Bell size={17} />
+              {notifications.data?.data.some((n) => !n.read) && <i />}
+            </Link>
+            <Link
+              className="top-avatar"
+              to="/candidate/profile"
+              aria-label="Edit your profile"
+            >
+              AM
+            </Link>
+          </div>
+        </header>
+        <div className="demo-banner">
+          <span className="mono">DEMO ENVIRONMENT</span>
+          <span>
+            Explore freely. All identities and opportunities are fictional. This
+            shared workspace is public.
+          </span>
+          <a href="/support">
+            Details <ArrowUpRight size={11} />
+          </a>
+        </div>
+        <main id="main" className="main-content">
+          <Routes>
+            <Route path="/" element={<Navigate to="/jobs" replace />} />
+            <Route path="/jobs" element={<Jobs />} />
+            <Route path="/jobs/:id" element={<JobDetail />} />
+            <Route
+              path="/candidate/dashboard"
+              element={<CandidateDashboard />}
+            />
+            <Route path="/candidate/profile" element={<ProfileEditor />} />
+            <Route path="/candidate/video" element={<VideoPage />} />
+            <Route path="/candidate/applications" element={<Applications />} />
+            <Route path="/employer/*" element={<Employer />} />
+            <Route path="/admin/*" element={<Admin />} />
+            {["privacy", "terms", "support"].map((path) => (
+              <Route
+                key={path}
+                path={`/${path}`}
+                element={<InfoPage type={path} />}
+              />
+            ))}
+            <Route path="*" element={<InfoPage type="404" />} />
+          </Routes>
+        </main>
+        <footer className="app-footer">
+          <span>© {new Date().getFullYear()} XOGAME.AI</span>
+          <span>A little more human.</span>
+          <div>
+            <Link to="/privacy">Privacy</Link>
+            <Link to="/terms">Terms</Link>
+            <Link to="/support">Support</Link>
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
 }
-function InfoPage({type}:{type:string}) {
- const content:Record<string,[string,string]>= {privacy:['Privacy in this open workspace','This MVP has no authentication or private accounts. Everyone can access and modify demo profiles, videos, applications, recruitment notes and administration. Use fictional information only. Uploading a video requires explicit processing and employer-sharing consent; submitting an application stores a snapshot of the profile. Delete your video from the video workspace to revoke playback. Application snapshots and audit events remain in the local database. Production privacy and retention policies are pending approval.'],terms:['Terms of the demo','This is an open-access demonstration, not a live recruitment service. Employers and opportunities are fictional. Applications are always free. Do not upload personal, confidential or copyrighted materials without permission. Organisation approval is a demonstration workflow. Final legal terms require review before a public recruitment launch.'],support:['Need a hand?','Start with Professional profile, add a short MP4 or WebM video, and browse opportunities. Your application needs a complete profile, a ready video and explicit sharing consent. Use Employer workspace to review applications, and Platform review to approve organisations. Everyone shares the same demo candidate. No private or sensitive information should be entered. If a request fails, keep the page open and retry. For local diagnostics, check /docs and the server request ID in the response headers.'], '404':['That page has moved out of view.','The address does not match a page in this workspace. Head back to opportunities and keep exploring.']};
- const [title,body]=content[type];return <article className="prose panel"><div className="eyebrow">XOGAME.AI / {type.toUpperCase()}</div><h1>{title}</h1><p>{body}</p><Link className="button primary" to="/jobs">Back to opportunities <ArrowUpRight size={15}/></Link></article>;
+function InfoPage({ type }: { type: string }) {
+  const content: Record<string, [string, string]> = {
+    privacy: [
+      "Privacy in this open workspace",
+      "This MVP has no authentication or private accounts. Everyone can access and modify demo profiles, videos, applications, recruitment notes and administration. Use fictional information only. Uploading a video requires explicit processing and employer-sharing consent; submitting an application stores a snapshot of the profile. Delete your video from the video workspace to revoke playback. Application snapshots and audit events remain in the local database. Production privacy and retention policies are pending approval.",
+    ],
+    terms: [
+      "Terms of the demo",
+      "This is an open-access demonstration, not a live recruitment service. Employers and opportunities are fictional. Applications are always free. Do not upload personal, confidential or copyrighted materials without permission. Organisation approval is a demonstration workflow. Final legal terms require review before a public recruitment launch.",
+    ],
+    support: [
+      "Need a hand?",
+      "Start with Professional profile, add a short MP4 or WebM video, and browse opportunities. Your application needs a complete profile, a ready video and explicit sharing consent. Use Employer workspace to review applications, and Platform review to approve organisations. Everyone shares the same demo candidate. No private or sensitive information should be entered. If a request fails, keep the page open and retry. For local diagnostics, check /docs and the server request ID in the response headers.",
+    ],
+    "404": [
+      "That page has moved out of view.",
+      "The address does not match a page in this workspace. Head back to opportunities and keep exploring.",
+    ],
+  };
+  const [title, body] = content[type];
+  return (
+    <article className="prose panel">
+      <div className="eyebrow">XOGAME.AI / {type.toUpperCase()}</div>
+      <h1>{title}</h1>
+      <p>{body}</p>
+      <Link className="button primary" to="/jobs">
+        Back to opportunities <ArrowUpRight size={15} />
+      </Link>
+    </article>
+  );
 }
-class ErrorBoundary extends React.Component<{children:React.ReactNode},{failed:boolean}> { state={failed:false};static getDerivedStateFromError(){return {failed:true};}render(){return this.state.failed?<main className="fatal-error"><h1>Something interrupted this page.</h1><p>Your saved work is still in the database.</p><a href="/jobs">Return to opportunities</a></main>:this.props.children;} }
-ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><ErrorBoundary><QueryClientProvider client={queryClient}><BrowserRouter><App/></BrowserRouter></QueryClientProvider></ErrorBoundary></React.StrictMode>);
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { failed: boolean }
+> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  render() {
+    return this.state.failed ? (
+      <main className="fatal-error">
+        <h1>Something interrupted this page.</h1>
+        <p>Your saved work is still in the database.</p>
+        <a href="/jobs">Return to opportunities</a>
+      </main>
+    ) : (
+      this.props.children
+    );
+  }
+}
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </QueryClientProvider>
+    </ErrorBoundary>
+  </React.StrictMode>,
+);

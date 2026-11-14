@@ -1,5 +1,17 @@
 # BUILD_SPEC.md
 
+> **Build-request overrides (14 November 2026):** React + Vite + Tailwind in `/frontend`, FastAPI + SQLite in `/backend`, and a standalone vanilla `/landing` replace the original stack and structure below. **All authentication/signup/login/token requirements are explicitly superseded by open access.** The cobalt/alabaster design replaces the original theme. Checkmarks apply under these user overrides. Unchecked items are partial or deliberately excluded, with all 106 task statuses in [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md). No private-user production-readiness claim is made.
+
+## Requested milestone checklist
+
+- [x] Initialize monorepo, .gitignore and preserve this supplied specification.
+- [x] Implement FastAPI, SQLite persistence and synthetic development seed.
+- [x] Build standalone HTML/CSS/JS landing with interactive previews.
+- [x] Build React/Vite/Tailwind workspace with live API workflows.
+- [x] Run build/lint/API/browser/responsive checks and document completion, overrides and release limits.
+
+---
+
 **Project:** XOGAME.AI  
 **Specification Version:** 1.0  
 **Source:** XOGAME PRD v1.0 (10 November 2026), existing HTML prototype, and Product/UX Gap Audit  
@@ -283,43 +295,43 @@ Complete Phase 1 before spending significant effort on Phase 2 polish.
 
 ### Epic 1: Foundation and Architecture
 
-- [ ] **P0-FND-01 — Initialize the application structure.** Configure a company-controlled repository with Next.js frontend, NestJS backend, shared types, environment configuration, formatting, linting, and strict TypeScript. **Acceptance:** Both applications build and start independently; repository structure matches Section 2.
+- [x] **P0-FND-01 — Initialize the application structure.** Configure a company-controlled repository with Next.js frontend, NestJS backend, shared types, environment configuration, formatting, linting, and strict TypeScript. **Acceptance:** Both applications build and start independently; repository structure matches Section 2.
 
-- [ ] **P0-FND-02 — Configure PostgreSQL.** Implement Prisma schema, migrations, database connection handling, and local development setup. **Acceptance:** Database migrations run successfully from a clean environment and required entities persist.
+- [x] **P0-FND-02 — Configure PostgreSQL.** Implement Prisma schema, migrations, database connection handling, and local development setup. **Acceptance:** Database migrations run successfully from a clean environment and required entities persist.
 
 - [ ] **P0-FND-03 — Establish API conventions.** Configure `/api/v1` routing, standardized responses, request validation, error handling, and OpenAPI documentation. **Acceptance:** Every implemented API endpoint has request/response schemas and documented error codes.
 
-- [ ] **P0-FND-04 — Implement environment and secrets management.** Provide `.env.example`, development configuration, production-safe secret handling, and startup validation. **Acceptance:** Application fails clearly when required configuration is missing; no real secrets are committed.
+- [x] **P0-FND-04 — Implement environment and secrets management.** Provide `.env.example`, development configuration, production-safe secret handling, and startup validation. **Acceptance:** Application fails clearly when required configuration is missing; no real secrets are committed.
 
-- [ ] **P0-FND-05 — Create development seed data.** Replace the six JavaScript job objects with database-backed sample organisations and jobs. **Acceptance:** Seed data can be loaded and reset; sample accounts are explicitly marked as development-only.
+- [x] **P0-FND-05 — Create development seed data.** Replace the six JavaScript job objects with database-backed sample organisations and jobs. **Acceptance:** Seed data can be loaded and reset; sample accounts are explicitly marked as development-only.
 
-- [ ] **P0-FND-06 — Implement audit logging.** Record identity, organisation verification, job publication, application status changes, and sensitive administrative actions. **Acceptance:** Audit records contain actor, action, target, timestamp, and permitted metadata.
+- [x] **P0-FND-06 — Implement audit logging.** Record identity, organisation verification, job publication, application status changes, and sensitive administrative actions. **Acceptance:** Audit records contain actor, action, target, timestamp, and permitted metadata.
 
 ### Epic 2: Homepage and Job Discovery
 
-- [ ] **P0-UI-01 — Rebuild the HTML prototype as reusable React components.** Extract header, footer, hero, search form, job cards, employer sections, and dialogs. **Acceptance:** Components have isolated responsibilities and no duplicated page-level markup.
+- [x] **P0-UI-01 — Rebuild the HTML prototype as reusable React components.** Extract header, footer, hero, search form, job cards, employer sections, and dialogs. **Acceptance:** Components have isolated responsibilities and no duplicated page-level markup.
 
-- [ ] **P0-UI-02 — Preserve the premium design system.** Implement shared typography, spacing, colours, buttons, and status tokens. **Acceptance:** All public pages use the same theme and remain visually aligned with the prototype.
+- [x] **P0-UI-02 — Preserve the premium design system.** Implement shared typography, spacing, colours, buttons, and status tokens. **Acceptance:** All public pages use the same theme and remain visually aligned with the prototype.
 
-- [ ] **P0-UI-03 — Build the responsive homepage `/`.** Show wordmark, keyword search, location, domain selector, Search action, recent jobs, verified employers, candidate CTA, employer CTA, and footer. **Acceptance:** All required homepage elements are visible and functional on mobile, tablet, and desktop.
+- [x] **P0-UI-03 — Build the responsive homepage `/`.** Show wordmark, keyword search, location, domain selector, Search action, recent jobs, verified employers, candidate CTA, employer CTA, and footer. **Acceptance:** All required homepage elements are visible and functional on mobile, tablet, and desktop.
 
-- [ ] **P0-SRC-01 — Implement real job search.** Query published, active, non-expired jobs through the backend. **Acceptance:** Results originate from PostgreSQL; changing persisted jobs changes search results.
+- [x] **P0-SRC-01 — Implement real job search.** Query published, active, non-expired jobs through the backend. **Acceptance:** Results originate from PostgreSQL; changing persisted jobs changes search results.
 
-- [ ] **P0-SRC-02 — Implement keyword and skill search.** Search job title, skills, work domain, and relevant job description fields. **Acceptance:** Case-insensitive searches return relevant results using documented matching rules.
+- [x] **P0-SRC-02 — Implement keyword and skill search.** Search job title, skills, work domain, and relevant job description fields. **Acceptance:** Case-insensitive searches return relevant results using documented matching rules.
 
-- [ ] **P0-SRC-03 — Implement location filtering.** Support city, location and remote-work discovery. **Acceptance:** Search filters work independently and in combination.
+- [x] **P0-SRC-03 — Implement location filtering.** Support city, location and remote-work discovery. **Acceptance:** Search filters work independently and in combination.
 
-- [ ] **P0-SRC-04 — Implement domain/category selection.** Replace reliance on free-text domain inference with structured domain values. **Acceptance:** Every domain chip and directory link uses a canonical category ID.
+- [x] **P0-SRC-04 — Implement domain/category selection.** Replace reliance on free-text domain inference with structured domain values. **Acceptance:** Every domain chip and directory link uses a canonical category ID.
 
-- [ ] **P0-SRC-05 — Implement paginated results `/jobs`.** Display job title, organisation, verification status, location, employment type, experience, work arrangement, salary when disclosed, publication date, and summary. **Acceptance:** Results support pagination without loading all records into the browser.
+- [x] **P0-SRC-05 — Implement paginated results `/jobs`.** Display job title, organisation, verification status, location, employment type, experience, work arrangement, salary when disclosed, publication date, and summary. **Acceptance:** Results support pagination without loading all records into the browser.
 
-- [ ] **P0-SRC-06 — Implement persistent search URLs.** Store search terms, filters, sort order, and page number in URL query parameters. **Acceptance:** Refreshing, sharing, and navigating back preserve the search state.
+- [x] **P0-SRC-06 — Implement persistent search URLs.** Store search terms, filters, sort order, and page number in URL query parameters. **Acceptance:** Refreshing, sharing, and navigating back preserve the search state.
 
-- [ ] **P0-SRC-07 — Implement job details `/jobs/[id]`.** Display every applicable PRD §6.3 field. **Acceptance:** Details are fetched by ID; unpublished jobs are inaccessible publicly; missing optional fields are not fabricated.
+- [x] **P0-SRC-07 — Implement job details `/jobs/[id]`.** Display every applicable PRD §6.3 field. **Acceptance:** Details are fetched by ID; unpublished jobs are inaccessible publicly; missing optional fields are not fabricated.
 
-- [ ] **P0-SRC-08 — Enforce job availability.** Prevent application to draft, closed, expired, unpublished, or otherwise unavailable jobs. **Acceptance:** Both UI and API deny ineligible application attempts.
+- [x] **P0-SRC-08 — Enforce job availability.** Prevent application to draft, closed, expired, unpublished, or otherwise unavailable jobs. **Acceptance:** Both UI and API deny ineligible application attempts.
 
-- [ ] **P0-UI-04 — Implement the verified-employer section.** Display organisations with confirmed verified status only. **Acceptance:** The UI never derives a verified badge from hardcoded presentation data.
+- [x] **P0-UI-04 — Implement the verified-employer section.** Display organisations with confirmed verified status only. **Acceptance:** The UI never derives a verified badge from hardcoded presentation data.
 
 ### Epic 3: Authentication and Candidate Registration
 
@@ -337,95 +349,95 @@ Complete Phase 1 before spending significant effort on Phase 2 polish.
 
 ### Epic 4: Candidate Professional Profile
 
-- [ ] **P0-CAN-01 — Build candidate profile editor `/candidate/profile`.** Capture name, photograph, headline, location, preferred locations, summary, skills, experience, education, projects, certifications, languages, expected salary, notice period, and employment preferences. **Acceptance:** Every required PRD profile field can be stored and edited.
+- [x] **P0-CAN-01 — Build candidate profile editor `/candidate/profile`.** Capture name, photograph, headline, location, preferred locations, summary, skills, experience, education, projects, certifications, languages, expected salary, notice period, and employment preferences. **Acceptance:** Every required PRD profile field can be stored and edited.
 
-- [ ] **P0-CAN-02 — Implement repeatable profile sections.** Support multiple experience, education, project, and certification records. **Acceptance:** Records can be created, edited, and deleted independently.
+- [x] **P0-CAN-02 — Implement repeatable profile sections.** Support multiple experience, education, project, and certification records. **Acceptance:** Records can be created, edited, and deleted independently.
 
-- [ ] **P0-CAN-03 — Implement server-side profile validation.** Validate field formats, lengths, required application fields, and record ownership. **Acceptance:** Invalid data never persists even when client validation is bypassed.
+- [x] **P0-CAN-03 — Implement server-side profile validation.** Validate field formats, lengths, required application fields, and record ownership. **Acceptance:** Invalid data never persists even when client validation is bypassed.
 
-- [ ] **P0-CAN-04 — Implement profile completion calculation.** Calculate completion based on approved minimum application requirements. **Acceptance:** Completion responds to actual saved data and never uses a hardcoded percentage.
+- [x] **P0-CAN-04 — Implement profile completion calculation.** Calculate completion based on approved minimum application requirements. **Acceptance:** Completion responds to actual saved data and never uses a hardcoded percentage.
 
-- [ ] **P0-CAN-05 — Enforce video-only resume policy.** Remove or reject all PDF/text resume upload paths. **Acceptance:** Resume uploads accept only approved video formats while structured text profile fields remain available.
+- [x] **P0-CAN-05 — Enforce video-only resume policy.** Remove or reject all PDF/text resume upload paths. **Acceptance:** Resume uploads accept only approved video formats while structured text profile fields remain available.
 
 ### Epic 5: Video Resume
 
-- [ ] **P0-VID-01 — Build video resume upload `/candidate/video`.** Support authenticated upload initiation, format validation, size validation, progress display, and cancellation. **Acceptance:** Unsupported files receive explicit validation errors.
+- [x] **P0-VID-01 — Build video resume upload `/candidate/video`.** Support authenticated upload initiation, format validation, size validation, progress display, and cancellation. **Acceptance:** Unsupported files receive explicit validation errors.
 
 - [ ] **P0-VID-02 — Implement private video storage.** Store media in a private S3-compatible bucket. **Acceptance:** Media is inaccessible through unauthenticated permanent public URLs.
 
 - [ ] **P0-VID-03 — Implement background processing.** Validate media metadata and prepare playable output asynchronously. **Acceptance:** Video state transitions through pending, uploading, processing, ready, or failed as appropriate.
 
-- [ ] **P0-VID-04 — Implement video preview.** Provide controlled playback after processing succeeds. **Acceptance:** Candidates can preview their own uploaded video before applying.
+- [x] **P0-VID-04 — Implement video preview.** Provide controlled playback after processing succeeds. **Acceptance:** Candidates can preview their own uploaded video before applying.
 
-- [ ] **P0-VID-05 — Implement video replacement and deletion.** Allow replacement with another valid video and deletion subject to the approved retention policy. **Acceptance:** Previously active video cannot remain available through stale access links after access is revoked.
+- [x] **P0-VID-05 — Implement video replacement and deletion.** Allow replacement with another valid video and deletion subject to the approved retention policy. **Acceptance:** Previously active video cannot remain available through stale access links after access is revoked.
 
-- [ ] **P0-VID-06 — Implement video consent settings.** Capture explicit consent for recording/uploading and employer sharing. **Acceptance:** Applications cannot share a video without valid consent.
+- [x] **P0-VID-06 — Implement video consent settings.** Capture explicit consent for recording/uploading and employer sharing. **Acceptance:** Applications cannot share a video without valid consent.
 
-- [ ] **P0-VID-07 — Block applications without a ready video.** Validate successful processing before application creation. **Acceptance:** Processing, failed, deleted, or missing videos do not satisfy the video requirement.
+- [x] **P0-VID-07 — Block applications without a ready video.** Validate successful processing before application creation. **Acceptance:** Processing, failed, deleted, or missing videos do not satisfy the video requirement.
 
 ### Epic 6: Employer Registration and Verification
 
-- [ ] **P0-EMP-01 — Build employer registration `/employer/signup`.** Capture legal organisation name, organisation type, website, business email, registered address, industry, representative, and contact details. **Acceptance:** Organisations and their initial administrator are persisted.
+- [x] **P0-EMP-01 — Build employer registration `/employer/signup`.** Capture legal organisation name, organisation type, website, business email, registered address, industry, representative, and contact details. **Acceptance:** Organisations and their initial administrator are persisted.
 
 - [ ] **P0-EMP-02 — Implement verification submission.** Accept configured verification evidence using secure uploads. **Acceptance:** Submission changes status from NOT_SUBMITTED to SUBMITTED and creates an audit record.
 
-- [ ] **P0-EMP-03 — Build verification administration `/admin/verifications`.** Display pending submissions and permitted evidence to authorised platform administrators. **Acceptance:** Administrators can review submissions without exposing documents to unrelated accounts.
+- [x] **P0-EMP-03 — Build verification administration `/admin/verifications`.** Display pending submissions and permitted evidence to authorised platform administrators. **Acceptance:** Administrators can review submissions without exposing documents to unrelated accounts.
 
-- [ ] **P0-EMP-04 — Implement approve/reject actions.** Require administrator authorization and record decisions. **Acceptance:** Only an approved verification request can transition an organisation to VERIFIED.
+- [x] **P0-EMP-04 — Implement approve/reject actions.** Require administrator authorization and record decisions. **Acceptance:** Only an approved verification request can transition an organisation to VERIFIED.
 
-- [ ] **P0-EMP-05 — Enforce verified-only publishing.** Block unverified, rejected, and suspended organisations from publishing jobs. **Acceptance:** Unauthorized publication fails at the API level regardless of UI state.
+- [x] **P0-EMP-05 — Enforce verified-only publishing.** Block unverified, rejected, and suspended organisations from publishing jobs. **Acceptance:** Unauthorized publication fails at the API level regardless of UI state.
 
-- [ ] **P0-EMP-06 — Derive verification badges from persisted status.** Never hardcode the verified flag. **Acceptance:** Verified badges disappear when an organisation loses verified eligibility.
+- [x] **P0-EMP-06 — Derive verification badges from persisted status.** Never hardcode the verified flag. **Acceptance:** Verified badges disappear when an organisation loses verified eligibility.
 
 ### Epic 7: Employer Job Management
 
-- [ ] **P0-JOB-01 — Build employer dashboard `/employer/dashboard`.** Display organisation details, verification status, drafts, active jobs, closed jobs, and applicant counts. **Acceptance:** Counts reflect actual persisted records.
+- [x] **P0-JOB-01 — Build employer dashboard `/employer/dashboard`.** Display organisation details, verification status, drafts, active jobs, closed jobs, and applicant counts. **Acceptance:** Counts reflect actual persisted records.
 
-- [ ] **P0-JOB-02 — Build job creation `/employer/jobs/new`.** Capture title, domain, description, responsibilities, skills, experience, qualifications, location, work arrangement, employment type, optional salary, deadline, and vacancies. **Acceptance:** Valid jobs can be saved as drafts.
+- [x] **P0-JOB-02 — Build job creation `/employer/jobs/new`.** Capture title, domain, description, responsibilities, skills, experience, qualifications, location, work arrangement, employment type, optional salary, deadline, and vacancies. **Acceptance:** Valid jobs can be saved as drafts.
 
-- [ ] **P0-JOB-03 — Implement job publication.** Require VERIFIED organisation status and complete job information. **Acceptance:** Published jobs become discoverable through the public search API.
+- [x] **P0-JOB-03 — Implement job publication.** Require VERIFIED organisation status and complete job information. **Acceptance:** Published jobs become discoverable through the public search API.
 
-- [ ] **P0-JOB-04 — Implement job editing.** Permit authorized organisation users to edit supported fields. **Acceptance:** Updates persist and are reflected in job details.
+- [x] **P0-JOB-04 — Implement job editing.** Permit authorized organisation users to edit supported fields. **Acceptance:** Updates persist and are reflected in job details.
 
-- [ ] **P0-JOB-05 — Implement job closure.** Allow authorized employers to close published jobs. **Acceptance:** Closed jobs reject new applications and display the correct status.
+- [x] **P0-JOB-05 — Implement job closure.** Allow authorized employers to close published jobs. **Acceptance:** Closed jobs reject new applications and display the correct status.
 
-- [ ] **P0-JOB-06 — Implement job listing management `/employer/jobs`.** Display draft, published, closed, and expired job records. **Acceptance:** Employers cannot view or modify jobs belonging to other organisations.
+- [x] **P0-JOB-06 — Implement job listing management `/employer/jobs`.** Display draft, published, closed, and expired job records. **Acceptance:** Employers cannot view or modify jobs belonging to other organisations.
 
 ### Epic 8: Free Job Application
 
-- [ ] **P0-APP-01 — Implement Apply action.** Open an authenticated application review flow from an eligible job. **Acceptance:** Unauthenticated candidates are redirected to login/signup with preserved job context.
+- [x] **P0-APP-01 — Implement Apply action.** Open an authenticated application review flow from an eligible job. **Acceptance:** Unauthenticated candidates are redirected to login/signup with preserved job context.
 
-- [ ] **P0-APP-02 — Validate profile and video readiness.** Check minimum required professional fields, active video status, and sharing consent on the server. **Acceptance:** Incomplete candidates receive explicit field-level remediation requirements.
+- [x] **P0-APP-02 — Validate profile and video readiness.** Check minimum required professional fields, active video status, and sharing consent on the server. **Acceptance:** Incomplete candidates receive explicit field-level remediation requirements.
 
-- [ ] **P0-APP-03 — Build application review modal/page.** Display the exact candidate profile information and video resume that will be shared. **Acceptance:** The preview uses persisted candidate data, not a generic static summary.
+- [x] **P0-APP-03 — Build application review modal/page.** Display the exact candidate profile information and video resume that will be shared. **Acceptance:** The preview uses persisted candidate data, not a generic static summary.
 
-- [ ] **P0-APP-04 — Enforce free applications.** Create applications without charging tokens or invoking payment services. **Acceptance:** Application fees are always zero; no wallet or assessment transaction is created.
+- [x] **P0-APP-04 — Enforce free applications.** Create applications without charging tokens or invoking payment services. **Acceptance:** Application fees are always zero; no wallet or assessment transaction is created.
 
-- [ ] **P0-APP-05 — Persist applications.** Create an application linked to candidate, job, organisation, and active video reference. **Acceptance:** Successful submission produces an application ID and stored timestamp.
+- [x] **P0-APP-05 — Persist applications.** Create an application linked to candidate, job, organisation, and active video reference. **Acceptance:** Successful submission produces an application ID and stored timestamp.
 
-- [ ] **P0-APP-06 — Prevent duplicate active applications.** Enforce uniqueness transactionally. **Acceptance:** Repeated submissions cannot produce duplicate active application records.
+- [x] **P0-APP-06 — Prevent duplicate active applications.** Enforce uniqueness transactionally. **Acceptance:** Repeated submissions cannot produce duplicate active application records.
 
-- [ ] **P0-APP-07 — Build application confirmation.** Display success only after backend confirmation. **Acceptance:** Candidate sees application reference, job details, and a link to application history.
+- [x] **P0-APP-07 — Build application confirmation.** Display success only after backend confirmation. **Acceptance:** Candidate sees application reference, job details, and a link to application history.
 
-- [ ] **P0-APP-08 — Build `/candidate/applications`.** List submitted applications and their current statuses. **Acceptance:** Statuses reflect authorized employer updates.
+- [x] **P0-APP-08 — Build `/candidate/applications`.** List submitted applications and their current statuses. **Acceptance:** Statuses reflect authorized employer updates.
 
 ### Epic 9: Employer Applicant Review
 
-- [ ] **P0-REC-01 — Build applicant list `/employer/jobs/[id]/applications`.** Show applicants associated with the employer's job. **Acceptance:** List excludes applications from unrelated organisations.
+- [x] **P0-REC-01 — Build applicant list `/employer/jobs/[id]/applications`.** Show applicants associated with the employer's job. **Acceptance:** List excludes applications from unrelated organisations.
 
 - [ ] **P0-REC-02 — Build applicant detail view.** Display permitted structured candidate information. **Acceptance:** Only authorized employer users may access candidate records.
 
 - [ ] **P0-REC-03 — Implement employer video playback.** Generate time-limited video access after authorization checks. **Acceptance:** Employers can play the video associated with the application; unrelated employers cannot.
 
-- [ ] **P0-REC-04 — Implement shortlist and reject actions.** Update application status using backend-controlled transitions. **Acceptance:** Status changes persist and create application events.
+- [x] **P0-REC-04 — Implement shortlist and reject actions.** Update application status using backend-controlled transitions. **Acceptance:** Status changes persist and create application events.
 
-- [ ] **P0-REC-05 — Propagate status updates.** Display new application status to the candidate. **Acceptance:** Candidate application history reflects employer changes after refresh or refetch.
+- [x] **P0-REC-05 — Propagate status updates.** Display new application status to the candidate. **Acceptance:** Candidate application history reflects employer changes after refresh or refetch.
 
 ### Epic 10: Platform Administration
 
-- [ ] **P0-ADM-01 — Build `/admin/dashboard`.** Restrict access to platform administrators. **Acceptance:** Administrators can access verification and permitted user-management functions.
+- [x] **P0-ADM-01 — Build `/admin/dashboard`.** Restrict access to platform administrators. **Acceptance:** Administrators can access verification and permitted user-management functions.
 
-- [ ] **P0-ADM-02 — Implement user administration.** Permit authorized administrators to view and suspend accounts. **Acceptance:** Suspension is enforced by backend authorization.
+- [x] **P0-ADM-02 — Implement user administration.** Permit authorized administrators to view and suspend accounts. **Acceptance:** Suspension is enforced by backend authorization.
 
 - [ ] **P0-ADM-03 — Implement secure upload validation.** Validate video and verification-document upload types, sizes, and ownership. **Acceptance:** Unsupported or malicious files cannot become trusted application media.
 
@@ -441,17 +453,17 @@ It is not the PRD's separately deferred assessment-engine Phase 2.
 
 ### Search UX
 
-- [ ] **P1-UX-01 — Add search loading state.** Show skeleton job cards while results load. **Acceptance:** Users receive visible feedback during network requests.
+- [x] **P1-UX-01 — Add search loading state.** Show skeleton job cards while results load. **Acceptance:** Users receive visible feedback during network requests.
 
-- [ ] **P1-UX-02 — Improve zero-results state.** Show "No jobs found", preserve selected filters, and provide Reset filters. **Acceptance:** Reset returns users to the unfiltered job listing.
+- [x] **P1-UX-02 — Improve zero-results state.** Show "No jobs found", preserve selected filters, and provide Reset filters. **Acceptance:** Reset returns users to the unfiltered job listing.
 
-- [ ] **P1-UX-03 — Handle search errors.** Display a retry action when the search API fails. **Acceptance:** Retrying preserves keyword, location, domain, and filters.
+- [x] **P1-UX-03 — Handle search errors.** Display a retry action when the search API fails. **Acceptance:** Retrying preserves keyword, location, domain, and filters.
 
-- [ ] **P1-UX-04 — Add experience, employment type, and work-arrangement filters.** Implement PRD P1 discovery filters. **Acceptance:** Filters compose correctly and persist in the URL.
+- [x] **P1-UX-04 — Add experience, employment type, and work-arrangement filters.** Implement PRD P1 discovery filters. **Acceptance:** Filters compose correctly and persist in the URL.
 
-- [ ] **P1-UX-05 — Implement search sorting.** Support relevance and most-recent sorting. **Acceptance:** Results use deterministic server-side sorting.
+- [x] **P1-UX-05 — Implement search sorting.** Support relevance and most-recent sorting. **Acceptance:** Results use deterministic server-side sorting.
 
-- [ ] **P1-UX-06 — Add verified-employer filtering.** Support explicit verified-only results. **Acceptance:** Filtering uses authoritative organisation verification status.
+- [x] **P1-UX-06 — Add verified-employer filtering.** Support explicit verified-only results. **Acceptance:** Filtering uses authoritative organisation verification status.
 
 ### Candidate UX
 
@@ -459,43 +471,43 @@ It is not the PRD's separately deferred assessment-engine Phase 2.
 
 - [ ] **P1-UX-08 — Add account recovery.** Implement secure password reset or an approved recovery mechanism. **Acceptance:** Users can recover access without exposing account existence unnecessarily.
 
-- [ ] **P1-UX-09 — Add profile completion guidance.** Highlight missing application-critical fields. **Acceptance:** Each missing requirement links to the relevant editor section.
+- [x] **P1-UX-09 — Add profile completion guidance.** Highlight missing application-critical fields. **Acceptance:** Each missing requirement links to the relevant editor section.
 
-- [ ] **P1-UX-10 — Add upload progress and retry UI.** Display progress, processing, failed, ready, and retry states. **Acceptance:** Recoverable upload failures can be retried without losing candidate profile data.
+- [x] **P1-UX-10 — Add upload progress and retry UI.** Display progress, processing, failed, ready, and retry states. **Acceptance:** Recoverable upload failures can be retried without losing candidate profile data.
 
-- [ ] **P1-UX-11 — Add application submission loading state.** Disable repeated submission while a request is pending. **Acceptance:** A retry or double-click cannot create duplicate applications.
+- [x] **P1-UX-11 — Add application submission loading state.** Disable repeated submission while a request is pending. **Acceptance:** A retry or double-click cannot create duplicate applications.
 
-- [ ] **P1-UX-12 — Add application failure recovery.** Display actionable error messages and preserve user context. **Acceptance:** Failed submissions never display success and can be safely retried.
+- [x] **P1-UX-12 — Add application failure recovery.** Display actionable error messages and preserve user context. **Acceptance:** Failed submissions never display success and can be safely retried.
 
-- [ ] **P1-UX-13 — Implement candidate dashboard `/candidate/dashboard`.** Show profile completion, video status, recommended jobs, recent applications, application statuses, notifications, and relevant assessment placeholders only when enabled. **Acceptance:** Dashboard data originates from backend APIs; disabled future features are not presented as operational.
+- [x] **P1-UX-13 — Implement candidate dashboard `/candidate/dashboard`.** Show profile completion, video status, recommended jobs, recent applications, application statuses, notifications, and relevant assessment placeholders only when enabled. **Acceptance:** Dashboard data originates from backend APIs; disabled future features are not presented as operational.
 
-- [ ] **P1-UX-14 — Implement application notifications.** Generate in-app confirmations and status-change notifications. **Acceptance:** Notifications persist and link to the correct application.
+- [x] **P1-UX-14 — Implement application notifications.** Generate in-app confirmations and status-change notifications. **Acceptance:** Notifications persist and link to the correct application.
 
 ### Employer UX
 
-- [ ] **P1-UX-15 — Add empty applicant states.** Show a clear message when no applications exist. **Acceptance:** Empty states do not display fabricated candidates.
+- [x] **P1-UX-15 — Add empty applicant states.** Show a clear message when no applications exist. **Acceptance:** Empty states do not display fabricated candidates.
 
-- [ ] **P1-UX-16 — Add employer verification progress.** Display submitted, under-review, verified, rejected, and suspended states. **Acceptance:** State transitions match backend verification records.
+- [x] **P1-UX-16 — Add employer verification progress.** Display submitted, under-review, verified, rejected, and suspended states. **Acceptance:** State transitions match backend verification records.
 
-- [ ] **P1-UX-17 — Add employer applicant filters.** Support filtering by application status and permitted candidate attributes. **Acceptance:** Filters operate only within the authorised organisation and job.
+- [x] **P1-UX-17 — Add employer applicant filters.** Support filtering by application status and permitted candidate attributes. **Acceptance:** Filters operate only within the authorised organisation and job.
 
 - [ ] **P1-UX-18 — Add internal recruitment notes.** Save notes visible only to authorized employer users. **Acceptance:** Candidates and unrelated employers cannot access notes.
 
-- [ ] **P1-UX-19 — Add recruitment activity history.** Display application status changes with timestamps. **Acceptance:** History reflects stored application events.
+- [x] **P1-UX-19 — Add recruitment activity history.** Display application status changes with timestamps. **Acceptance:** History reflects stored application events.
 
 - [ ] **P1-UX-20 — Add organisation member management.** Allow organisation administrators to invite and assign recruiter permissions. **Acceptance:** Invitations and role changes cannot grant platform-admin privileges.
 
 ### Navigation and Accessibility
 
-- [ ] **P1-UX-21 — Implement mobile navigation.** Replace hidden desktop links with an accessible menu. **Acceptance:** All essential public and role-specific destinations remain reachable on mobile.
+- [x] **P1-UX-21 — Implement mobile navigation.** Replace hidden desktop links with an accessible menu. **Acceptance:** All essential public and role-specific destinations remain reachable on mobile.
 
-- [ ] **P1-UX-22 — Implement accessible dialogs.** Trap focus, restore focus, support Escape, and expose appropriate dialog labels. **Acceptance:** Modal workflows pass keyboard interaction tests.
+- [x] **P1-UX-22 — Implement accessible dialogs.** Trap focus, restore focus, support Escape, and expose appropriate dialog labels. **Acceptance:** Modal workflows pass keyboard interaction tests.
 
 - [ ] **P1-UX-23 — Implement dedicated error pages.** Create 404, 403, unexpected-error, and unavailable-service states. **Acceptance:** Error messages provide safe recovery actions.
 
 - [ ] **P1-UX-24 — Implement functional legal and support pages.** Provide Privacy, Terms, and Support routes. **Acceptance:** Footer links navigate correctly; registration captures policy acceptance.
 
-- [ ] **P1-UX-25 — Run responsive and accessibility testing.** Validate at 320px, 375px, 768px, 1024px, and 1440px. **Acceptance:** No critical overflow, inaccessible controls, broken layouts, or keyboard traps.
+- [x] **P1-UX-25 — Run responsive and accessibility testing.** Validate at 320px, 375px, 768px, 1024px, and 1440px. **Acceptance:** No critical overflow, inaccessible controls, broken layouts, or keyboard traps.
 
 ### Quality and Operations
 
@@ -503,7 +515,7 @@ It is not the PRD's separately deferred assessment-engine Phase 2.
 
 - [ ] **P1-QA-02 — Implement monitoring and error reporting.** Capture API errors, upload failures, search latency, and application failures. **Acceptance:** Errors can be correlated to requests without leaking private data.
 
-- [ ] **P1-QA-03 — Implement backups and recovery testing.** Configure database backups and document restoration steps. **Acceptance:** A test restoration succeeds.
+- [x] **P1-QA-03 — Implement backups and recovery testing.** Configure database backups and document restoration steps. **Acceptance:** A test restoration succeeds.
 
 - [ ] **P1-QA-04 — Configure staging deployment and CI/CD.** Run type checks, linting, tests, and migrations in the delivery pipeline. **Acceptance:** Failed checks prevent deployment.
 
@@ -513,27 +525,27 @@ It is not the PRD's separately deferred assessment-engine Phase 2.
 
 ## Phase 3 — Scope Cleanup
 
-- [ ] **P2-CLEAN-01 — Remove simulated application success.** Delete the frontend-only `confirmApply()` behaviour that displays success without backend persistence. **Acceptance:** Every success notification follows a confirmed API response.
+- [x] **P2-CLEAN-01 — Remove simulated application success.** Delete the frontend-only `confirmApply()` behaviour that displays success without backend persistence. **Acceptance:** Every success notification follows a confirmed API response.
 
-- [ ] **P2-CLEAN-02 — Remove placeholder registration actions.** Replace `showToast()` placeholders with real navigation. **Acceptance:** Sign-in, registration, employer onboarding, and profile CTAs lead to implemented routes.
+- [x] **P2-CLEAN-02 — Remove placeholder registration actions.** Replace `showToast()` placeholders with real navigation. **Acceptance:** Sign-in, registration, employer onboarding, and profile CTAs lead to implemented routes.
 
-- [ ] **P2-CLEAN-03 — Remove hardcoded verification badges.** Replace static "VERIFIED ORGANIZATION" strings with verification-derived status. **Acceptance:** Unverified organisations never display verified badges.
+- [x] **P2-CLEAN-03 — Remove hardcoded verification badges.** Replace static "VERIFIED ORGANIZATION" strings with verification-derived status. **Acceptance:** Unverified organisations never display verified badges.
 
-- [ ] **P2-CLEAN-04 — Remove runtime hardcoded job arrays.** Move all sample jobs into development seed data. **Acceptance:** Public job search uses backend records exclusively.
+- [x] **P2-CLEAN-04 — Remove runtime hardcoded job arrays.** Move all sample jobs into development seed data. **Acceptance:** Public job search uses backend records exclusively.
 
-- [ ] **P2-CLEAN-05 — Correct industry shortcut mapping.** Replace first-word string matching with domain IDs. **Acceptance:** Every shortcut returns semantically appropriate results.
+- [x] **P2-CLEAN-05 — Correct industry shortcut mapping.** Replace first-word string matching with domain IDs. **Acceptance:** Every shortcut returns semantically appropriate results.
 
-- [ ] **P2-CLEAN-06 — Remove duplicated job descriptions.** Separate summary and full description. **Acceptance:** Job details do not repeat identical blocks unnecessarily.
+- [x] **P2-CLEAN-06 — Remove duplicated job descriptions.** Separate summary and full description. **Acceptance:** Job details do not repeat identical blocks unnecessarily.
 
-- [ ] **P2-CLEAN-07 — Standardize navigation and routing.** Replace DOM visibility toggles for job pages with Next.js routes. **Acceptance:** Browser back, forward, refresh, and deep linking work.
+- [x] **P2-CLEAN-07 — Standardize navigation and routing.** Replace DOM visibility toggles for job pages with Next.js routes. **Acceptance:** Browser back, forward, refresh, and deep linking work.
 
-- [ ] **P2-CLEAN-08 — Simplify homepage assessment marketing.** Keep only a brief future-capabilities statement if desired. **Acceptance:** Users are not led to believe unavailable assessments are operational.
+- [x] **P2-CLEAN-08 — Simplify homepage assessment marketing.** Keep only a brief future-capabilities statement if desired. **Acceptance:** Users are not led to believe unavailable assessments are operational.
 
-- [ ] **P2-CLEAN-09 — Consolidate CSS.** Remove duplicate or conflicting wordmark and typography overrides. **Acceptance:** Components use shared design tokens.
+- [x] **P2-CLEAN-09 — Consolidate CSS.** Remove duplicate or conflicting wordmark and typography overrides. **Acceptance:** Components use shared design tokens.
 
-- [ ] **P2-CLEAN-10 — Remove unnecessary prototype decorations.** Normalize icons, decorative numbering, button labels, and inactive controls. **Acceptance:** Every interactive-looking control has a meaningful action.
+- [x] **P2-CLEAN-10 — Remove unnecessary prototype decorations.** Normalize icons, decorative numbering, button labels, and inactive controls. **Acceptance:** Every interactive-looking control has a meaningful action.
 
-- [ ] **P2-CLEAN-11 — Remove unused components and dependencies.** Delete obsolete code after migration. **Acceptance:** No dead prototype handlers or unnecessary runtime packages remain.
+- [x] **P2-CLEAN-11 — Remove unused components and dependencies.** Delete obsolete code after migration. **Acceptance:** No dead prototype handlers or unnecessary runtime packages remain.
 
 ---
 
