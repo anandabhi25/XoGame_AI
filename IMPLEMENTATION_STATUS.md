@@ -133,7 +133,7 @@ All API paths below are relative to `/api/v1` unless `/docs`. “Status/notes”
 - Standalone framework-free landing in landing/index.html, styles.css and app.js, with working app links, category preview, introduction playback animation and scroll reveals.
 - README local startup, configuration, seed/migration, test and restore instructions.
 - OpenAPI schema snapshot and API guide.
-- Five requested local milestone commits are prepared on main, preserving the remote initial commit as their ancestor. Publishing is currently blocked: command-line push and connected GitHub Git-data API both return HTTP 403 (Resource not accessible by integration). Repository write access must be enabled before delivery to GitHub.
+- All five requested milestone commits are published on GitHub main, preserving the repository initial commit as their ancestor. Repository write access was confirmed by a successful push after the connection was updated.
 
 ## Release limits
 
