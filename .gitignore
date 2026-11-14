@@ -10,3 +10,4 @@ backend/media/
 playwright-report/
 test-results/
 *.pyc
+*.tsbuildinfo
